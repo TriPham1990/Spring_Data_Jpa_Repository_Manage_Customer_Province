@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tri.lo.model.Customer;
+import tri.lo.model.Province;
 import tri.lo.service.CustomerService;
+import tri.lo.service.ProvinceService;
 
 import java.util.List;
 
@@ -14,6 +16,14 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> provinces(){
+        return provinceService.findAll();
+    }
 
     @GetMapping("/create-customer")
     public ModelAndView showCreateCustomer(){
@@ -31,7 +41,7 @@ public class CustomerController {
 
     @GetMapping("/customers")
     public ModelAndView showListCustomer(){
-        List<Customer> customers = customerService.findAll();
+        Iterable<Customer> customers = customerService.findAll();
         ModelAndView modelAndView = new ModelAndView("customer/index");
         modelAndView.addObject("customers", customers);
         return modelAndView;
