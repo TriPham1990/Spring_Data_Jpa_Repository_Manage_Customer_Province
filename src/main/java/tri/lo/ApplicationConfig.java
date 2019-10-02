@@ -1,7 +1,6 @@
 package tri.lo;
 
-import tri.lo.repository.CustomerRepository;
-import tri.lo.repository.impl.CustomerRepositoryImpl;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import tri.lo.service.CustomerService;
 import tri.lo.service.impl.CustomerServiceImpl;
 import org.springframework.beans.BeansException;
@@ -35,6 +34,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("tri.lo.controllers")
+@EnableJpaRepositories("tri.lo.repository")
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -44,10 +44,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         this.applicationContext = applicationContext;
     }
 
-    @Bean
-    public CustomerRepository customerRepository(){
-        return new CustomerRepositoryImpl();
-    }
 
     @Bean
     public CustomerService customerService(){

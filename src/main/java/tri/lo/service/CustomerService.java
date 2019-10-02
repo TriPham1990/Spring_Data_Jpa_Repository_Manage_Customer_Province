@@ -2,10 +2,9 @@ package tri.lo.service;
 
 import tri.lo.model.Customer;
 
-import java.util.List;
 
 public interface CustomerService {
-    List<Customer> findAll();
+    Iterable<Customer> findAll();
 
     Customer findById(Long id);
 
