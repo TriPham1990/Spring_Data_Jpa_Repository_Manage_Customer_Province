@@ -1,6 +1,7 @@
 package tri.lo;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
 import tri.lo.formatter.ProvinceFormatter;
 import tri.lo.service.CustomerService;
@@ -39,6 +40,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("tri.lo.controllers")
 @EnableJpaRepositories("tri.lo.repository")
+@EnableSpringDataWebSupport
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;

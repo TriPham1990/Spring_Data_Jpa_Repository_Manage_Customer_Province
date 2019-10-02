@@ -1,6 +1,8 @@
 package tri.lo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,6 +13,7 @@ import tri.lo.service.CustomerService;
 import tri.lo.service.ProvinceService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CustomerController {
@@ -40,8 +43,13 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    public ModelAndView showListCustomer(){
-        Iterable<Customer> customers = customerService.findAll();
+    public ModelAndView showListCustomer(@RequestParam("s") Optional<String> s, Pageable pageable){
+        Page<Customer> customers;
+        if(s.isPresent()){
+            customers = customerService.findAllByFirstNameContaining(s.get(), pageable);
+        } else {
+            customers = customerService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("customer/index");
         modelAndView.addObject("customers", customers);
         return modelAndView;
